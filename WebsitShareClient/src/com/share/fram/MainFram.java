@@ -12,9 +12,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -73,7 +75,8 @@ public class MainFram extends JFrame {
 					boolean codeRs = identifyCode.verify(conCode);
 					if (codeRs) {
 						//"182.254.157.166"
-						establishConnection = new EstablishConnection("127.0.0.1", 2333, conCode);
+						// "127.0.0.1"
+						establishConnection = new EstablishConnection("182.254.157.166", 2333, conCode);
 						boolean conResult = establishConnection.connect();
 						//判断连接结果
 						if (conResult) {
@@ -130,7 +133,14 @@ public class MainFram extends JFrame {
 			SystemTray tray = SystemTray.getSystemTray();
 			// 创建托盘图标：
 			// 1.创建Image图像
-			Image image = Toolkit.getDefaultToolkit().getImage("img/icon.png");
+			//Image image = Toolkit.getDefaultToolkit().getImage("img/icon.png");
+			Image image = null;
+			try {
+				image = ImageIO.read(getClass().getResource("/img/icon.png"));
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+
 			// 2.停留提示text
 			String text = "网站推送助手";
 			// 3.弹出菜单popupMenu
