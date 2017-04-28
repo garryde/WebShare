@@ -47,7 +47,7 @@ public class EstablishConnection extends Thread {
 	 */
 	public void run() {
 		while (true) {
-			// ---------读数据---------------------------
+			// ---------读数据------------
 			close = isServerClose(socket);// 判断是否断开
 			if (!close) {// 没有断开，开始读数据
 				String readtext = ReadText(socket);
@@ -69,7 +69,7 @@ public class EstablishConnection extends Thread {
 					InetAddress address = InetAddress.getByName(getIp());
 					socket = new Socket(address, getPort());
 					socket.setKeepAlive(true);
-					close = !Send(socket, "{\"act\":\"regist\",\"code\":\""+conCode+"\"}");
+					close = !Send(socket, "{\"act\":\"recon\",\"code\":\""+conCode+"\"}");
 					new SendTips("建立连接成功：" + getIp() + ":" + getPort());
 					//System.out.println("success:" + getIp() + ":" + getPort());
 				} catch (Exception se) {

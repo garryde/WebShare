@@ -31,7 +31,7 @@ public class UrlServlet extends HttpServlet {
 		
 		String url = (String) request.getParameter("url");
 		String code = (String) request.getParameter("code");
-		System.out.println(url + " ###### " + code);
+
 		if (url == null || code == null) {
 			response.getWriter().print("{\"act\":\"openResult\",\"code\":\"false\"}");
 		}else if (url.equals("") || code.equals("")) {

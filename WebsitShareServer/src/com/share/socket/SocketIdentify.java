@@ -24,21 +24,23 @@ public class SocketIdentify implements Runnable{
 				String jsonString = SocketUtil.readStrFromStream(in);
 				JsonObj jsonObj = JsonHandle.handle(jsonString);
 
-				Socket delSocket = StaticResource.socketMap.get(jsonObj.getCode());
+				Socket alreadyExitSocket = StaticResource.socketMap.get(jsonObj.getCode());
 				
-				if (delSocket == null) {
+				if (alreadyExitSocket == null) {
 					//开始注册
 					new SocketRegist(socket, jsonObj.getCode());
 
 				}else {
 					//确认是否为重连
-					if(jsonObj.getAct().equals("recon")){
+					if (jsonObj.getAct().equals("recon")) {
 						//先注销该Socke
 						StaticResource.socketMap.remove(jsonObj.getCode());
-						delSocket.close();
-						delSocket = null;
+						alreadyExitSocket.close();
+						alreadyExitSocket = null;
 						//开始注册
 						new SocketRegist(socket, jsonObj.getCode());
+					} else {
+						//验证码已存在
 					}
 				}
 			} catch (IOException e) {

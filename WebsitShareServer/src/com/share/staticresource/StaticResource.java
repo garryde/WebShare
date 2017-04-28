@@ -9,5 +9,4 @@ import java.util.concurrent.ConcurrentHashMap;
 public class StaticResource {
 	//Socket池
 	public static ConcurrentHashMap<String, Socket> socketMap = new ConcurrentHashMap<String, Socket>();
-	
 }
