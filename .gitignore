@@ -5,7 +5,6 @@
 
 #Folder
 .idea/
-out/
 
 # Package Files #
 *.war
