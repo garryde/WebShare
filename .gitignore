@@ -3,6 +3,9 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
+#Idea配置文件夹
+.idea/
+
 # Package Files #
 *.war
 *.ear
