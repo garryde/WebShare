@@ -14,7 +14,7 @@ public class OpenUrl {
         } catch (URISyntaxException e) {  
             e.printStackTrace();
         } catch (IOException e) {  
-        	new SendTips("发送链接非法！\n" + url);
+        	e.printStackTrace();
         }  
 	}
 }
