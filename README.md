@@ -11,6 +11,7 @@
 ## 3.电脑客户端配置
  * 客户机需要安装jre运行环境，请前往Oracle官网下载
  * 打包好客户端：https://github.com/549876099/WebShare/tree/master/out/artifacts/WebsitShareClient_jar
+ * 电脑客户端有断线重连机制，连接码在与服务器保持连接期间保持唯一有效，本地网络异常期间，连接码保存一小时，过期回收。
 
 ## 4.请求说明
  * 以已搭建好服务器为例：
