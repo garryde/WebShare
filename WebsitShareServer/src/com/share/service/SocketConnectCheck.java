@@ -2,6 +2,7 @@ package com.share.service;
 
 import com.share.socket.SocketAccept;
 import com.share.staticresource.StaticResource;
+import com.share.util.SocketUtil;
 
 import java.net.Socket;
 import java.util.Map;
@@ -14,10 +15,13 @@ public class SocketConnectCheck implements Runnable {
 	@Override
 	public void run() {
 		while (true) {
+			//遍历Socket池
 			for (Map.Entry<String,Socket> emp:StaticResource.socketMap.entrySet() ) {
-				boolean isClose = isServerClose(emp.getValue());
+				//判断是否已经断开
+				boolean isClose = SocketUtil.isServerClose(emp.getValue());
 				if (isClose) {
-					StaticResource.socketMap.remove(emp.getKey());
+					//加载线程进行二次判断
+					Executors.newCachedThreadPool().execute(new SocketTwiceConfirm(emp.getValue(),emp.getKey()));
 				}
 			}
 			try {
@@ -26,15 +30,6 @@ public class SocketConnectCheck implements Runnable {
 				e.printStackTrace();
 			}
 
-		}
-	}
-
-	public Boolean isServerClose(Socket socket) {
-		try {
-			socket.sendUrgentData(0);// 发送1个字节的紧急数据，默认情况下，服务器端没有开启紧急数据处理，不影响正常通信
-			return false;
-		} catch (Exception se) {
-			return true;
 		}
 	}
 }

@@ -20,9 +20,9 @@ public class RunLoad implements ServletContextListener{
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		// TODO Auto-generated method stub
+		//启动Socket接收线程
 		Executors.newCachedThreadPool().execute(new SocketAccept());
-
+		//启动Socket活性检测线程
 		Executors.newCachedThreadPool().execute(new SocketConnectCheck());
 	}
 }
