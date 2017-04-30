@@ -1,5 +1,6 @@
 package com.share.service;
 
+import com.share.main.Main;
 import com.share.util.SocketUtil;
 
 import java.net.InetAddress;
@@ -61,6 +62,7 @@ public class SocketListener implements Runnable {
 						} else if (disConNum > 5 && disConNum <= 10) {
 							Thread.sleep(60000);
 						} else {
+							Main.isConnect = false;
 							Thread.sleep(1800000);
 						}
 					} catch (InterruptedException e) {

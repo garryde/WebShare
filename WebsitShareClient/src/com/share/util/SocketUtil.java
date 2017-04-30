@@ -15,15 +15,10 @@ public class SocketUtil {
      * @param message
      * @return
      */
-    public static Boolean Send(Socket socket, String message) {
-        try {
+    public static Boolean Send(Socket socket, String message) throws IOException {
             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             out.println(message);
             return true;
-        } catch (Exception se) {
-            se.printStackTrace();
-            return false;
-        }
     }
 
     /**

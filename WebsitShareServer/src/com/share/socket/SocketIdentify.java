@@ -41,6 +41,7 @@ public class SocketIdentify implements Runnable{
 						new SocketRegist(socket, jsonObj.getCode());
 					} else {
 						//验证码已存在
+						socket.close();
 					}
 				}
 			} catch (IOException e) {

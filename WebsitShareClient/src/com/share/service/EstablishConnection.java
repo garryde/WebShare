@@ -33,7 +33,14 @@ public class EstablishConnection{
 			InetAddress address = InetAddress.getByName(ip);
 			socket = new Socket(address, port);
 			SocketUtil.Send(socket, "{\"act\":\"regist\",\"code\":\""+conCode+"\"}");
+			//建立监听线程
+			new SocketListener(ip,port,conCode, socket).run();
+			//建立心跳线程
+			//new SocketHeart(socket,conCode);
+			//发送至全局Socket
 			Main.socket = socket;
+			//发送至连接全局状态判断
+			Main.isConnect = true;
 			return true;
 		} catch (UnknownHostException e) {
 			return false;

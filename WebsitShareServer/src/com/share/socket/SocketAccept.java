@@ -23,6 +23,7 @@ public class SocketAccept implements Runnable{
 			try {
 				//阻塞接收Socket
 				Socket socket =  serverSocket.accept();
+				socket.setKeepAlive(true);
 				//启动Socket身份检测线程
 				Executors.newCachedThreadPool().execute(new SocketIdentify(socket));
 			} catch (IOException e) {

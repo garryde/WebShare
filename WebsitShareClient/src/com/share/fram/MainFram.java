@@ -73,35 +73,47 @@ public class MainFram extends JFrame {
 		contectService.addActionListener(new ActionListener() {
 			// 连接服务器按钮点击事件
 			public void actionPerformed(ActionEvent e) {
-				String conCode = codeTextField.getText();
-				//本地判断识别码是否合法
-				boolean rs = regularIdentifyCode(conCode);
-				if (rs) {
-					//检查Code是否存在
-					boolean codeRs = identifyCode.verify(conCode);
-					if (codeRs) {
-						establishConnection = new EstablishConnection(ip, port, conCode);
-						boolean conResult = establishConnection.connect();
-						//判断连接结果
-						if (conResult) {
-							new SocketListener(ip,port,conCode, Main.socket);
-
-							JOptionPane.showMessageDialog(null,"服务器连接成功,关闭窗口自动最小化至托盘！");
-						} else {
-							JOptionPane.showMessageDialog(null,"连接失败,请重试！");
+				if (Main.isConnect) {
+					JOptionPane.showMessageDialog(null, "已连接服务器，或正在尝试重连，请稍候再试。");
+				} else {
+					//若是重连，销毁Socket
+					if (Main.socket != null){
+						try {
+							Main.socket.close();
+						} catch (IOException e1) {
+							e1.printStackTrace();
 						}
-						//con.start();
+						Main.socket = null;
+					}
+					//获取用户输入的识别码
+					String conCode = codeTextField.getText();
+					//本地判断识别码是否合法
+					boolean rs = regularIdentifyCode(conCode);
+					if (rs) {
+						//检查Code是否存在
+						boolean codeRs = identifyCode.verify(conCode);
+						if (codeRs) {
+							establishConnection = new EstablishConnection(ip, port, conCode);
+							boolean conResult = establishConnection.connect();
+							//判断连接结果
+							if (conResult) {
+								JOptionPane.showMessageDialog(null,"服务器连接成功,关闭窗口自动最小化至托盘！");
+							} else {
+								JOptionPane.showMessageDialog(null,"连接失败,请重试！");
+							}
+							//con.start();
+						} else {
+							JOptionPane.showMessageDialog(null,"识别码已存在，请更换识别码！");
+							conCode = "";
+							codeTextField.setText("");
+						}
 					} else {
-						JOptionPane.showMessageDialog(null,"识别码已存在，请更换识别码！");
-						conCode = "";
+						JOptionPane.showMessageDialog(null,"输入错误，请输入六位纯数字！");
 						codeTextField.setText("");
 					}
-				} else {
-					JOptionPane.showMessageDialog(null,"输入错误，请输入六位纯数字！");
-					codeTextField.setText("");
 				}
-				
-				
+
+
 			}
 		});
 		
