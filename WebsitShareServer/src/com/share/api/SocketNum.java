@@ -2,6 +2,7 @@ package com.share.api;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.net.URL;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +18,6 @@ import com.share.staticresource.StaticResource;
 @WebServlet("/num")
 public class SocketNum extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     /**
      * @see HttpServlet#HttpServlet()
      */
