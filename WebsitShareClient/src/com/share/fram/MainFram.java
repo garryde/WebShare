@@ -25,9 +25,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import com.share.main.Main;
 import com.share.service.EstablishConnection;
 import com.share.service.IdentifyCode;
 import com.share.service.JsonHandle;
+import com.share.service.SocketListener;
 
 public class MainFram extends JFrame {
 	private JPanel contentPane;
@@ -36,13 +38,17 @@ public class MainFram extends JFrame {
 	private EstablishConnection establishConnection = null;
 	private JTextField codeTextField;
 	private IdentifyCode identifyCode = new IdentifyCode();
+	private String ip;
+	private Integer port;
 	
 
-	public MainFram() {
+	public MainFram(String ip, Integer port) {
+		this.ip = ip;
+		this.port = port;
+
 		setFram();
 		this.setTray();
 		this.setVisible(true);
-		
 	}
 	
 	//设置主窗体
@@ -74,13 +80,12 @@ public class MainFram extends JFrame {
 					//检查Code是否存在
 					boolean codeRs = identifyCode.verify(conCode);
 					if (codeRs) {
-						//"182.254.157.166"
-						// "127.0.0.1"
-						establishConnection = new EstablishConnection("182.254.157.166", 2333, conCode);
+						establishConnection = new EstablishConnection(ip, port, conCode);
 						boolean conResult = establishConnection.connect();
 						//判断连接结果
 						if (conResult) {
-							establishConnection.start();
+							new SocketListener(ip,port,conCode, Main.socket);
+
 							JOptionPane.showMessageDialog(null,"服务器连接成功,关闭窗口自动最小化至托盘！");
 						} else {
 							JOptionPane.showMessageDialog(null,"连接失败,请重试！");
