@@ -6,7 +6,7 @@ import com.share.domain.IsUrlResult;
  * Created by GarryChung on 2017/4/30.
  */
 public class ControlService {
-    JsonService jsonService = new JsonService();
+    JsonMessageService jsonService = new JsonMessageService();
     UrlJudge urlJudge = new UrlJudge();
     IsUrlResult isUrlResult = new IsUrlResult();
 

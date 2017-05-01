@@ -29,9 +29,9 @@ public class SocketAccept implements Runnable{
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				//测试代码
+				System.out.println("SocketAccept");
 			}
-			
-			
 		}
 	}
 

@@ -23,12 +23,14 @@ public class SocketIdentify implements Runnable{
 				InputStream in = socket.getInputStream();
 				String jsonString = SocketUtil.readStrFromStream(in);
 				JsonObj jsonObj = JsonHandle.handle(jsonString);
-
 				Socket alreadyExitSocket = StaticResource.socketMap.get(jsonObj.getCode());
 				
 				if (alreadyExitSocket == null) {
 					//开始注册
 					new SocketRegist(socket, jsonObj.getCode());
+
+					//测试代码
+					System.out.println("注册成功！");
 
 				}else {
 					//确认是否为重连
@@ -36,16 +38,26 @@ public class SocketIdentify implements Runnable{
 						//先注销该Socke
 						StaticResource.socketMap.remove(jsonObj.getCode());
 						alreadyExitSocket.close();
-						alreadyExitSocket = null;
 						//开始注册
 						new SocketRegist(socket, jsonObj.getCode());
+
+						//测试代码
+						System.out.println("断连注册成功！");
+
 					} else {
+						//测试代码
+						System.out.println("非法Socket！");
+
 						//验证码已存在
 						socket.close();
+						socket = null;
 					}
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
+
+				//测试代码
+				System.out.println("SocketIdentify");
 			}
 		}
 	}

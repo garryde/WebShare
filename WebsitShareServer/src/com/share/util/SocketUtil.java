@@ -38,8 +38,6 @@ public class SocketUtil {
 		// read 1024 bytes per time
 		char[] chars = new char[2048];
 		int len;
-		
-		try {
 			while ((len = reader.read(chars)) != -1) {
 				// if the length of array is 1M
 				if (2048 == len) {
@@ -57,12 +55,6 @@ public class SocketUtil {
 					break;
 				}
 			}
-
-		} catch (IOException e) {
-			System.out.println(e);
-			throw e;
-		}
-		//System.out.println("end reading string from stream");
 		return result.toString();
 	}
 	

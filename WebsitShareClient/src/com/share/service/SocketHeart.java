@@ -13,21 +13,36 @@ public class SocketHeart extends Thread{
 	private String conCode = null;
 	boolean isRun = true;
 
-	public SocketHeart(Socket socket,String conCode) {
+	public void setRun(boolean run) {
+		isRun = run;
+	}
+
+	public SocketHeart(Socket socket, String conCode) {
 		this.socket = socket;
 		this.conCode = conCode;
 	}
 
 	@Override
 	public void run() {
-		while (isRun)
+		while (true) {
 			try {
-				SocketUtil.Send(socket,"{\"act\":\"heart\",\"code\":\""+conCode+"\"}");
-				Thread.sleep(10000);
-			} catch (IOException e) {
-				isRun = false;
+				Thread.sleep(2000);
 			} catch (InterruptedException e) {
-				isRun = false;
+				e.printStackTrace();
+			}
+			System.out.println("isRun：" + isRun);
+			while (isRun)
+				try {
+					SocketUtil.Send(socket,"{\"act\":\"heart\",\"code\":\""+conCode+"\"}");
+					System.out.println("心跳成功！");
+					Thread.sleep(8000);
+				} catch (IOException e) {
+					System.out.println("异常，心跳关闭！");
+					isRun = false;
+				} catch (InterruptedException e) {
+					System.out.println("异常，心跳关闭！");
+					isRun = false;
+			}
 		}
 	}
 }

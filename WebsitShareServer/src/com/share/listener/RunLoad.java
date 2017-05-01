@@ -6,7 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
-import com.share.service.SocketConnectCheck;
+import com.share.socket.SocketConnectCheck;
 import com.share.socket.SocketAccept;
 
 @WebListener

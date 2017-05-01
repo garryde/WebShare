@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.ConnectException;
-import java.net.InetAddress;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 
 public class EstablishConnection{
 	private String ip = null;// 连接服务器的IP
@@ -33,11 +30,21 @@ public class EstablishConnection{
 		try {
 			InetAddress address = InetAddress.getByName(ip);
 			socket = new Socket(address, port);
-			SocketUtil.Send(socket, "{\"act\":\"regist\",\"code\":\""+conCode+"\"}");
-			//建立监听线程
-			new SocketListener(ip,port,conCode, socket).start();
+			socket.setKeepAlive(true);
+			SocketUtil.Send(socket, "{\"act\":\"regist\",\"code\":\" "+conCode+" \"}");
+			//延时500ms
+			Thread thread = Thread.currentThread();
+			thread.sleep(500);
+			//测试连接是否断开
+			if (SocketUtil.isServerClose(socket)) {
+				return false;
+			}
 			//建立心跳线程
-			//new SocketHeart(socket,conCode);
+			SocketHeart socketHeart = new SocketHeart(socket,conCode);
+			//启动心跳线程
+			socketHeart.start();
+			//建立监听线程
+			new SocketListener(ip,port,conCode, socket,socketHeart).start();
 			//发送至全局Socket
 			Main.socket = socket;
 			//发送至连接全局状态判断
@@ -45,7 +52,11 @@ public class EstablishConnection{
 			return true;
 		} catch (UnknownHostException e) {
 			return false;
+		} catch (SocketException e) {
+			return false;
 		} catch (IOException e) {
+			return false;
+		} catch (InterruptedException e) {
 			return false;
 		}
 	}

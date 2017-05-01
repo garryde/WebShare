@@ -1,6 +1,5 @@
-package com.share.service;
+package com.share.socket;
 
-import com.share.socket.SocketAccept;
 import com.share.staticresource.StaticResource;
 import com.share.util.SocketUtil;
 
