@@ -9,7 +9,8 @@ import java.net.Socket;
 /**
  * Created by GarryChung on 2017/4/30.
  */
-public class SocketListener implements Runnable {
+public class SocketListener extends Thread {
+
 	private String ip = null;// 连接服务器的IP
 	private Integer port = null;// 连接服务器的端口
 	private String conCode = null;//识别代码
@@ -21,6 +22,7 @@ public class SocketListener implements Runnable {
 		this.ip = ip;
 		this.port = port;
 		this.conCode = conCode;
+		this.socket = socket;
 	}
 
 	@Override

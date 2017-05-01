@@ -3,6 +3,7 @@ package com.share.service;
 import com.share.main.Main;
 import com.share.util.SocketUtil;
 
+import javax.sound.midi.Soundbank;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +35,7 @@ public class EstablishConnection{
 			socket = new Socket(address, port);
 			SocketUtil.Send(socket, "{\"act\":\"regist\",\"code\":\""+conCode+"\"}");
 			//建立监听线程
-			new SocketListener(ip,port,conCode, socket).run();
+			new SocketListener(ip,port,conCode, socket).start();
 			//建立心跳线程
 			//new SocketHeart(socket,conCode);
 			//发送至全局Socket
