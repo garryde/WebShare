@@ -71,12 +71,12 @@ public class SocketListener extends Thread {
 					socket = new Socket(address, port);
 					//发送重连socket
 					close = !SocketUtil.Send(socket, "{\"act\":\"recon\",\"code\":\""+conCode+"\"}");
-					//唤醒心跳线程
-					socketHeart.setRun(true);
 					//发送至全局Socket
 					Main.socket.close();
 					Main.socket = null;
 					Main.socket = socket;
+					//唤醒心跳线程
+					socketHeart.setRun(true);
 					new SendTips("建立连接成功：" + ip + ":" + port);
 				} catch (Exception se) {
 					//记录失败次数

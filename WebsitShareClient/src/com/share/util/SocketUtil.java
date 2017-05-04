@@ -16,9 +16,9 @@ public class SocketUtil {
      * @return
      */
     public static Boolean Send(Socket socket, String message) throws IOException {
-            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
-            out.println(message);
-            return true;
+        PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
+        out.println(message);
+        return true;
     }
 
     /**

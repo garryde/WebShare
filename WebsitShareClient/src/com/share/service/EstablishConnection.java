@@ -39,8 +39,9 @@ public class EstablishConnection{
 			if (SocketUtil.isServerClose(socket)) {
 				return false;
 			}
+			System.out.println("检测断开完成！");
 			//建立心跳线程
-			SocketHeart socketHeart = new SocketHeart(socket,conCode);
+			SocketHeart socketHeart = new SocketHeart(conCode);
 			//启动心跳线程
 			socketHeart.start();
 			//建立监听线程
